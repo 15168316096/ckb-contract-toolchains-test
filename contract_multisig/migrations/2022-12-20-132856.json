@@ -1,0 +1,29 @@
+{
+  "cell_recipes": [
+    {
+      "name": "omni_lock",
+      "tx_hash": "0xf1f94777210d787586fc98cdbf5e410bd85dd6b30ff277492482c7ffbb4ef719",
+      "index": 0,
+      "occupied_capacity": 10729400000000,
+      "data_hash": "0x635f78eba450cb2f73f113022ff62e4bbfb5a39b7368c375c6a731ba4c85c59e",
+      "type_id": "0xda95dae16b8e92473f12bb8bfedab3a93e2e2b18996f836733dc7af81bd4739b"
+    },
+    {
+      "name": "simple_udt",
+      "tx_hash": "0x3570685cf5dcdafb01f0d7a73441d19da4d805e44d46fc1bbf43bfd9f3ce6f55",
+      "index": 0,
+      "occupied_capacity": 13400000000,
+      "data_hash": "0x5c4874a0133446fa675bf141a8ffd56c19044cca5fafca8160b500939311c876",
+      "type_id": "0x94bb0ae2b010f7a30b99322ffc81b353e282b9b71fa1f5e10e43562bfa7595bd"
+    }
+  ],
+  "dep_group_recipes": [
+    {
+      "name": "omni_lock_dep_group",
+      "tx_hash": "0x580bf5c83169c0561f25ad4c6f6de66adcf6282f7381c60a6df11785c7a7b5d5",
+      "index": 0,
+      "data_hash": "0x1a527771be6f765bc17b20c728b635e5021440cdc4b0af9878689687f8f885da",
+      "occupied_capacity": 13700000000
+    }
+  ]
+}

@@ -3,10 +3,10 @@ import os
 
 
 def get_logger(name):
-    log_dir = os.path.join(os.getcwd(), "../log")
-    if not os.path.exists(log_dir):
-        os.makedirs(log_dir)
-    return Logger(name, log_file=os.path.abspath(os.path.join(os.path.dirname(__file__), '../../log', 'output.log')))
+    log_file = os.path.abspath(os.path.join(os.getcwd(), "log", "output.log"))
+    if not os.path.exists(os.path.dirname(log_file)):
+        os.makedirs(os.path.dirname(log_file))
+    return Logger(name, log_file)
 
 
 class Logger:

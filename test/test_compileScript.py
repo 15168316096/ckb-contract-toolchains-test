@@ -5,7 +5,7 @@ import time
 import pytest
 
 from helper.Sshd import Sshd
-from test.utils.randString import generate_random_string
+from utils.randString import generate_random_string
 from utils.logger import get_logger
 
 logger = get_logger("CompileScript")

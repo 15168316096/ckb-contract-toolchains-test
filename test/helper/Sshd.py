@@ -39,15 +39,18 @@ class Sshd:
 
         logger.info(f"Running command: {' '.join(cmd_args)}")
 
-        async with await asyncio.create_subprocess_exec(
-                *cmd_args,
-                stdout=asyncio.subprocess.PIPE,
-                stderr=asyncio.subprocess.PIPE
-        ) as proc:
-            stdout, stderr = await proc.communicate()
-            output = (stdout + stderr).decode().strip()
-            logger.info(f"Command output: {output}")
-            return output
+        proc = await asyncio.create_subprocess_exec(
+            *cmd_args,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE
+        )
+
+        stdout, stderr = await proc.communicate()
+        output = (stdout + stderr).decode().strip()
+
+        logger.info(f"Command output: {output}")
+
+        return output
 
     @staticmethod
     @timeout(30)
@@ -73,13 +76,13 @@ class Sshd:
 
         try:
             # Use `async with` to automatically clean up resources
-            async with asyncio.create_subprocess_shell(
-                    cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE, shell=True
-            ) as proc:
-                stdout, stderr = await asyncio.gather(proc.stdout.readline(), proc.stderr.readline())
-                output = stdout.decode().strip() if stdout else stderr.decode().strip()
-                logger.info(f"Command output: {output}")
-                return output
+            proc = await asyncio.create_subprocess_shell(
+                cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE, shell=True
+            )
+            stdout, stderr = await asyncio.gather(proc.stdout.readline(), proc.stderr.readline())
+            output = stdout.decode().strip() if stdout else stderr.decode().strip()
+            logger.info(f"Command output: {output}")
+            return output
 
         except Exception as e:
             logger.error(f"Error executing command {cmd}: {e}")

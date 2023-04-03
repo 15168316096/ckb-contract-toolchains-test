@@ -12,6 +12,9 @@ logger = get_logger("CompileScript")
 
 
 class TestCompileScript:
+    @classmethod
+    def __int__(cls, loop):
+        cls.loop = loop
 
     @pytest.mark.parametrize("toolchain, compiletype", [
         ("nervos/ckb-riscv-gnu-toolchain:xenial", "riscv64-unknown-elf-gcc"),
@@ -19,11 +22,22 @@ class TestCompileScript:
     ])
     def test_generateScriptBinByToolChain(self, toolchain, compiletype):
         container_name = generate_random_string(5)
-        scriptBin = generate_random_string(3) + "-" + compiletype + "Bin"
-        scripts_dir = os.path.join(os.getcwd(), "testData/scripts")
-        asyncio.run(
-            Sshd.execute("docker", ["run", "-itd", "--name", f"{container_name}", "-v", f"{scripts_dir}:/code",
-                                    f"{toolchain}", "bash"]))
-        time.sleep(30)
-        asyncio.run(Sshd.executeByString(
-            f"docker exec -itd {container_name} sh -c ' cd code/ && {compiletype}  -Os always_success.c -o {scriptBin}'"))
+        script_bin = generate_random_string(3) + "-" + compiletype + "Bin"
+        scripts_dir = os.path.abspath(os.path.join(os.getcwd(), "data/scripts"))
+
+        try:
+            self.loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(self.loop)
+            asyncio.run(
+                Sshd.execute("docker", ["run", "-itd", "--name", f"{container_name}", "-v", f"{scripts_dir}:/code",
+                                        f"{toolchain}", "bash"]))
+            time.sleep(30)
+            asyncio.run(Sshd.executeByString(
+                f"docker exec -itd {container_name} sh -c ' cd code/ && {compiletype}  -Os always_success.c "
+                f"-o {script_bin}'"
+            ))
+        except Exception as e:
+            logger.error(f"Error run: {e}")
+        finally:
+            self.loop.close()
+

@@ -2,8 +2,8 @@ import asyncio
 import subprocess
 from typing import List, Optional
 
-from test.utils.logger import get_logger
-from test.utils.timeout import timeout
+from utils.logger import get_logger
+from utils.timeout import timeout
 
 logger = get_logger("Sshd")
 

@@ -23,7 +23,7 @@ class Sshd:
             return None
 
     @staticmethod
-    @timeout(90)
+    @timeout(120)
     async def execute(cmd: str, args: List[str] = None) -> str:
         """
         执行命令行，返回命令行输出结果

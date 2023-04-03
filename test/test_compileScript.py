@@ -19,7 +19,7 @@ class TestCompileScript:
     ])
     def test_generateScriptBinByToolChain(self, toolchain, compiletype):
         container_name = generate_random_string(5)
-        scriptBin = generate_random_string(3) + "Bin"
+        scriptBin = generate_random_string(3) + "-" + compiletype + "Bin"
         scripts_dir = os.path.join(os.getcwd(), "testData/scripts")
         asyncio.run(
             Sshd.execute("docker", ["run", "-itd", "--name", f"{container_name}", "-v", f"{scripts_dir}:/code",

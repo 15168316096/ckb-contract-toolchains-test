@@ -36,7 +36,7 @@ class TestCompileScript:
                 f"docker exec -itd {container_name} sh -c ' cd code/ && {compiletype}  -Os always_success.c "
                 f"-o {script_bin}'"
             ))
-        except Exception as e:
+        except RuntimeError as e:
             logger.error(f"Error run: {e}")
         finally:
             self.loop.close()

@@ -27,3 +27,11 @@ class TestCompileScript:
         time.sleep(30)
         asyncio.run(Sshd.executeByString(
             f"docker exec -itd {container_name} sh -c ' cd code/ && {compiletype}  -Os always_success.c -o {scriptBin}'"))
+
+    # todo
+    def test_deployScriptBinByCkbCli(self):
+        pass
+
+    # todo
+    def test_checkScriptByCKbDebugger(self):
+        pass

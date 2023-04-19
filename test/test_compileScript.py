@@ -13,7 +13,7 @@ logger = get_logger("CompileScript")
 
 class TestCompileScript:
     @classmethod
-    def __int__(cls, loop):
+    def __int__(cls, loop, script_bin):
         cls.loop = loop
 
     @pytest.mark.parametrize("toolchain, compiletype", [
@@ -25,6 +25,7 @@ class TestCompileScript:
         script_bin = generate_random_string(3) + "-" + compiletype + "Bin"
         scripts_dir = os.path.abspath(os.path.join(os.getcwd(), "data/scripts"))
 
+        os.environ['Bin'] = script_bin
         try:
             self.loop = asyncio.new_event_loop()
             asyncio.set_event_loop(self.loop)
@@ -40,4 +41,5 @@ class TestCompileScript:
             logger.error(f"Error run: {e}")
         finally:
             self.loop.close()
-
+            Sshd.execute_sync("make install")
+            Sshd.execute_sync("make ci")

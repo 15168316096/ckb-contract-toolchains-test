@@ -24,7 +24,6 @@ class TestCompileScript:
         container_name = generate_random_string(5)
         script_bin = generate_random_string(3) + "-" + compiletype + "Bin"
         scripts_dir = os.path.abspath(os.path.join(os.getcwd(), "data/scripts"))
-
         os.environ['Bin'] = script_bin
         try:
             self.loop = asyncio.new_event_loop()
@@ -34,7 +33,7 @@ class TestCompileScript:
                                         f"{toolchain}", "bash"]))
             time.sleep(30)
             asyncio.run(Sshd.executeByString(
-                f"docker exec -itd {container_name} sh -c ' cd code/ && {compiletype}  -Os always_success.c "
+                f"docker exec -itd {container_name} sh -c ' cd code/ && {compiletype}  -Os {script_name} "
                 f"-o {script_bin}'"
             ))
         except RuntimeError as e:
